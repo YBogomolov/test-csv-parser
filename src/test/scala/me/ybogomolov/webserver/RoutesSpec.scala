@@ -1,11 +1,15 @@
 package me.ybogomolov.webserver
 
-import cats.effect.IO
+import cats.effect.{ContextShift, IO}
 import org.http4s._
 import org.http4s.implicits._
 import org.scalatest.FunSpec
 
+import scala.concurrent.ExecutionContext.Implicits.global
+
 class RoutesSpec extends FunSpec {
+  implicit val cs: ContextShift[IO] = IO.contextShift(global)
+
   describe("Routes spec") {
     it("should respond to id request with success") {
       val repo: PriceRepository[IO] = (id: String) => IO.pure(Some(Price(id, 42.0)))

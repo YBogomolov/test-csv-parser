@@ -6,7 +6,7 @@ import me.ybogomolov.webserver.{Price, PriceRepository, Routes}
 import org.http4s.server.blaze.BlazeServerBuilder
 
 object MainApp extends IOApp {
-  val repo: PriceRepository[IO] = (id: String) => IO.pure(Some(Price(id, 42.0)))
+  val repo: PriceRepository[IO] = (id: String) => IO.pure(Price(id, 42.0).some)
 
   override def run(args: List[String]): IO[ExitCode] = {
     BlazeServerBuilder[IO]
